@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
+  devise_for :teachers, path: 'teachers'
+  devise_for :students, path: 'students'
+  
   root 'home#index'
-
   get 'home/index'
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
