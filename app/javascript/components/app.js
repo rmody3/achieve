@@ -1,48 +1,37 @@
-import React, { useState } from 'react'
-import axios from 'axios'
+import React from 'react'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+import { connect } from 'react-redux'
 
-import csrfHelper from '../utils/csrfHelper' 
+import Dashboard from './dashboard'
+import Login from './login'
+import Signup from './signup'
 
-const App = () => {
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
-    const [passwordConfirmation, setPasswordConfirmation] = useState([{ text: 'Learn Hooks' }]);
+import { setBootstrapData } from '../actions'
 
-    const handleSignup = (e) => {
-        e.preventDefault()
-    
-        csrfHelper()
-    
-        axios.post('http://localhost:3000/teachers', {
-            email: email,
-            password: password,
-            passwordConfirmation: passwordConfirmation
-        })
-    }
 
-    return (
-        <div>
-            <h2>Sign Up</h2>
-            <input 
-                type='text'
-                id='email' 
-                placeholder='email'
-                onChange={event => setEmail(event.target.value)}
-            />
-            <input 
-                type='password'
-                id='password' 
-                placeholder='password'
-                onChange={event => setPassword(event.target.value)}
-            />
-            <input 
-                type='password'
-                id='password' 
-                onChange={event => setPasswordConfirmation(event.target.value)}
-            />
-            <button onClick={handleSignup}>Sign Up!</button>
-        </div>
-    )
-}   
+const App = (props) => { 
+  props.setBootstrapData()
 
-export default App
+  return (
+    <Router>
+      <Switch>
+        <Route exact path='/' component={Dashboard} />
+        <Route exact path='/dashboard' component={Dashboard} />
+        <Route exact path='/login' component={Login} />
+        <Route exact path='/signup' component={Signup} />
+      </Switch>       
+    </Router>
+  )
+}
+
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    setBootstrapData: () => dispatch(setBootstrapData(props.data))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(App)

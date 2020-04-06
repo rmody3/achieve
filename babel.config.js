@@ -82,6 +82,20 @@ module.exports = function(api) {
           removeImport: true
         }
       ]
-    ].filter(Boolean)
+    ].filter(Boolean),
+    env: {
+      test: {
+        presets: ['babel-preset-jest'],
+        plugins: [
+          'dynamic-import-node',
+          [
+            'astroturf/plugin',
+            {
+              writeFiles: false
+            }
+          ]
+        ]
+      }
+    }
   }
 }

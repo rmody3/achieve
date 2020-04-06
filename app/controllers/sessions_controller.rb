@@ -1,11 +1,17 @@
-class SessionsController < Devise::RegistrationsController
-    respond_to :json
+class SessionsController < Devise::SessionsController
+  respond_to :json
 
-    def new
-        super
+  def create
+    super do |user|
+      if resource
+        return render json: {logged_in: true, user: resource.to_json}
+      else
+        return render json: {logged_in: false, errors: resource.errors.to_json}
+      end
     end
+  end
 
-    def create
-        super
-    end    
+  def destroy
+    super
+  end
 end

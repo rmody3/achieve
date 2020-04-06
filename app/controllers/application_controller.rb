@@ -1,26 +1,35 @@
 class ApplicationController < ActionController::Base
-    helper_method :login!, :logged_in?, :current_user, :authorized_user?, :logout!
+    helper_method :current_user, :authorized_user?, :user_signed_in?, :bootstrap_data
+  
+  def current_user
+    current_teacher || current_student
+  end
 
-    def login!
-        session[:user_id] = @user.id
-    end
-    
-    def logged_in?
-        !!session[:user_id]
-    end
-    
-    def current_user
-        student = Student.find(session[:user_id]) if session[:user_id]
-        teacher = Teacher.find(session[:user_id]) if session[:user_id]
+  def current_user_type
+    current_user.class.name
+  end
 
-        @current_user ||= (student || teacher)
-    end
+  def authorized_user?
+    @user == current_user
+  end
 
-    def authorized_user?
-         @user == current_user
-    end
-    
-    def logout!
-         session.clear
-    end
+
+  def authenticate_user!
+    return if current_user
+
+    redirect_to home_index_path
+  end
+
+
+  def user_signed_in?
+    teacher_signed_in? || student_signed_in?
+  end
+
+  def bootstrap_data
+    {
+      logged_in: user_signed_in?,
+      user: current_user,
+      user_type: current_user.class&.name
+    }
+  end
 end
