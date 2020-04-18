@@ -139,7 +139,7 @@ const Signup = (props) => {
         <Label>
           <div>Password Confirmation:</div>
           <Input 
-            type='text'
+            type='password'
             id='password-confirmation' 
             placeholder='password'
             onChange={event => setPasswordConfirmation(event.target.value)}

@@ -4,6 +4,7 @@ import { Redirect, Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 import httpClient from '../utils/http_client'
+
 import { setBootstrapData } from '../actions'
 
 const Container = styled.div`
@@ -66,20 +67,24 @@ const Submit = styled.button`
 const Login = (props) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [userType, setUserType] = useState('students');
+  const [userType, setUserType] = useState('student');
 
   const handleLogin = (e) => {
     e.preventDefault()
 
-    httpClient.post(`/${userType}/sign_in`, {user: {
+    let body = {}
+    body[userType] = {
       email: email,
       password: password
-    }}).then(response => {
+    }
+
+    httpClient.post(`/${userType + 's'}/sign_in`, body)
+    .then(response => {
       if (response.data.logged_in) {
         props.setBootstrapData({
           loggedIn: response.data.logged_in,
           user: response.data.user,
-          userTpye: response.data.user_type
+          userType: response.data.user_type
         })
       } 
       console.log(response)
@@ -99,14 +104,14 @@ const Login = (props) => {
           <div>Select Account:</div>
           <SelectContainer>
             <Button 
-              className={userType == 'students' ? 'active' : ''} 
-              onClick={() => setUserType('students')}
+              className={userType == 'student' ? 'active' : ''} 
+              onClick={() => setUserType('student')}
             >
               Student
             </Button>
             <Button 
-              className={userType == 'teachers' ? 'active' : ''} 
-              onClick={() => setUserType('teachers')}
+              className={userType == 'teacher' ? 'active' : ''} 
+              onClick={() => setUserType('teacher')}
             >
               Teacher
             </Button>

@@ -13,6 +13,11 @@ Rails.application.routes.draw do
   root 'home#index'
   get 'home/index'
   get 'dashboard', to: 'home#index'
+  get 'classrooms', to: 'home#index'
+  get 'rewards', to: 'home#index'
 
-  resources :classrooms
+  namespace :api do
+    resources :classrooms
+    resources :rewards
+  end
 end

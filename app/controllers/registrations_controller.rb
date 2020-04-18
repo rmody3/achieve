@@ -7,13 +7,13 @@ class RegistrationsController < Devise::RegistrationsController
       
       if resource.save
           if resource.active_for_authentication?
-          set_flash_message :error, :signed_up if is_navigational_format?
-          sign_up(resource_name, resource)
-          return render :json => {:logged_in => true, user: current_user.to_json}
+            set_flash_message :error, :signed_up if is_navigational_format?
+            sign_up(resource_name, resource)
+            return render :json => {:logged_in => true, user: current_user.to_json, user_type: current_user_type}
           else
-          set_flash_message :error, :"signed_up_but_#{resource.inactive_message}" if is_navigational_format?
-          expire_session_data_after_sign_in!
-          return render :json => {:logged_in => true, user: current_user.to_json}
+            set_flash_message :error, :"signed_up_but_#{resource.inactive_message}" if is_navigational_format?
+            expire_session_data_after_sign_in!
+            return render :json => {:logged_in => true, user: current_user.to_json, user_type: current_user_type}
           end
       else
         clean_up_passwords resource

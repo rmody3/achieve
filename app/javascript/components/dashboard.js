@@ -15,15 +15,11 @@ const Container = styled.div`
 
 const Dashboard = (props) => {
 
-  const currentDashboard = null
-
-  
-
   if (props.loggedIn) {
    return(
     <Container>
       <NavBar />
-      { props.userType == 'Teacher' ? <TeacherDashboard /> : <StudentDashboard /> }
+      { props.userType == 'teacher' ? <TeacherDashboard /> : <StudentDashboard /> }
     </Container>
    )
   } else {
