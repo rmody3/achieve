@@ -4,10 +4,6 @@ import styled from 'styled-components'
 
 import httpClient from '../../utils/http_client'
 
-const Container = styled.div`
-  width: 100%;
-  margin-left: 150px
-`
 const ListContainer = styled.div`
   display: flex;
   justify-content: flex-start;
@@ -60,7 +56,7 @@ const ClassroomsIndex = () => {
   }, [classrooms.length])
   
   return (
-    <Container>
+    <>
       <Header>
         <Link to='/classrooms/new'><h3>+ Add a Classroom</h3></Link>
         <Title>Classrooms</Title>
@@ -77,7 +73,7 @@ const ClassroomsIndex = () => {
           })
         }
       </ListContainer>
-    </Container>
+    </>
   )
 }
 

@@ -12,9 +12,7 @@ import Signup from './signup'
 import Classroom from './classroom'
 import Reward from './reward'
 
-
 import { setBootstrapData } from '../actions'
-
 
 const App = (props) => { 
   props.setBootstrapData()

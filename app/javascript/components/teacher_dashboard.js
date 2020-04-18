@@ -8,7 +8,7 @@ const Container = styled.div`
   flex-direction: column;
   padding: 10px 10px;
   width: 100%;
-  margin-left: 150px
+  margin-left: 180px
 `
 
 const ListContainer = styled.div`

@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   get 'home/index'
   get 'dashboard', to: 'home#index'
   get 'classrooms', to: 'home#index'
+  get 'classrooms/new', to: 'home#index'
+  get 'classrooms/:id', to: 'home#index'
   get 'rewards', to: 'home#index'
 
   namespace :api do

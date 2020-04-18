@@ -7,7 +7,7 @@ const Container = styled.div`
   display: flex;
   padding: 10px 10px;
   width: 100%;
-  margin-left: 150px
+  margin-left: 180px
 `
 const Header = styled.div`
   display: flex;

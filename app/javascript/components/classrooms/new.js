@@ -1,10 +1,51 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { withRouter } from 'react-router-dom'
 
-const NewClassroom = () => {
+import httpClient from '../../utils/http_client'
+
+import {Header, Title} from '../shared/header'
+import Input from '../shared/input'
+import Submit from '../shared/submit'
+
+
+const NewClassroom = (props) => {
+  const [name, setName] = useState()
+
+  const handleSave = (e) => {
+    e.preventDefault()
+
+    let body = {
+      name: name
+    }
+
+    httpClient.post('/api/classrooms', body)
+    .then(response => {
+      props.history.push('/classrooms')
+      console.log(response)
+    }).catch(response => {
+      console.log(response)
+    })
+  }  
+
   return (
-    <div>New Classroom Form</div>
-  )
+    <>
+      <Header>
+        <Title>Add an new Classroom</Title>
+      </Header>
+      <Input
+        label="Class Name"
+        type="text"
+        id="classname"
+        placeholder="math 101"
+        onChange={e => setName(e.target.value)}
+      />
 
+      <Submit
+        label='Save'
+        onClick={handleSave}
+      />
+    </>
+  )
 }
 
-export default NewClassroom
+export default withRouter(NewClassroom)
