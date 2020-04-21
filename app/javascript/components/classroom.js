@@ -13,7 +13,6 @@ import Index from './classrooms'
 import Show from './classrooms/show'
 import New from './classrooms/new'
 
-
 const Container = styled.div`
   width: 100%;
   margin-left: 180px;

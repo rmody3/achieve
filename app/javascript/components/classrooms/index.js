@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 
+import {Header, Title} from '../shared/header'
+
 import httpClient from '../../utils/http_client'
 
 const ListContainer = styled.div`
@@ -10,17 +12,6 @@ const ListContainer = styled.div`
   flex-wrap: wrap;
   max-width: 100%;
   padding: 0px 20px
-`
-
-const Header = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
-  align-items: center;
-`
-
-const Title = styled.h1`
-  padding: 0 50px;
 `
 
 const Classroom = styled.div`

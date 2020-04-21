@@ -2,16 +2,20 @@ import React from 'react'
 import styled from 'styled-components'
 
 const StyledInput = styled.input`
-border: 1px solid black;
-border-radius: 8px;
-margin: 5px 0px 20px 0px;
-height: 40px;
-width: 100%
+  border: 1px solid black;
+  border-radius: 8px;
+  margin: 5px 0px 20px 0px;
+  height: 40px;
+  width: 100%
 `
 
-const Label = styled.label`
-display: flex
-flex-direction: column;
+export const Label = styled.label`
+  display: flex
+  flex-direction: column;
+`
+
+export const Select = styled.select`
+  margin: 5px 0px 20px 0px;
 `
 
 {/* <Input 
@@ -22,7 +26,7 @@ flex-direction: column;
   onChange=onChangeMethod
 /> */}
 
-const Input = (props) => {
+export const Input = (props) => {
   return (
     <Label>
       <div>
@@ -37,5 +41,3 @@ const Input = (props) => {
     </Label>
   )
 }
-
-export default Input

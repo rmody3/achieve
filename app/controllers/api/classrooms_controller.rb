@@ -29,7 +29,7 @@ class Api::ClassroomsController < ApplicationController
         students: classroom.students
       }
     else
-      render json: {errors: classrooms.errors.to_json}
+      render json: {errors: 'cannot find classroom'}
     end
   end
 

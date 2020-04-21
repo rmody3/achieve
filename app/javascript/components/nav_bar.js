@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 
 import httpClient from '../utils/http_client'
@@ -37,6 +37,7 @@ const NavBar = (props) => {
         user: null,
         userType: null
       })
+      props.history.push('/')
       console.log(response)
     }).catch(response => {
       console.log(response)
@@ -73,4 +74,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar)
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(NavBar))

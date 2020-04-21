@@ -26,7 +26,6 @@ const App = (props) => {
         <Route exact path='/signup' component={Signup} />
         <Route path='/classrooms' component={Classroom} />
         <Route path='/rewards' component={Reward} />
-
       </Switch>       
     </Router>
   )

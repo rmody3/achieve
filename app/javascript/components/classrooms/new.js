@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom'
 import httpClient from '../../utils/http_client'
 
 import {Header, Title} from '../shared/header'
-import Input from '../shared/input'
+import {Input} from '../shared/input'
 import Submit from '../shared/submit'
 
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_19_071841) do
+ActiveRecord::Schema.define(version: 2020_04_20_034846) do
 
   create_table "class_participants", force: :cascade do |t|
     t.integer "classroom_id"
@@ -38,6 +38,15 @@ ActiveRecord::Schema.define(version: 2020_03_19_071841) do
     t.datetime "approved_date"
     t.index ["class_participant_id"], name: "index_goals_on_class_participant_id"
     t.index ["due_date"], name: "index_goals_on_due_date"
+  end
+
+  create_table "rewards", force: :cascade do |t|
+    t.integer "classroom_id"
+    t.text "description", null: false
+    t.integer "achievement_points", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["classroom_id"], name: "index_rewards_on_classroom_id"
   end
 
   create_table "students", force: :cascade do |t|
@@ -68,4 +77,5 @@ ActiveRecord::Schema.define(version: 2020_03_19_071841) do
   add_foreign_key "class_participants", "students"
   add_foreign_key "classrooms", "teachers"
   add_foreign_key "goals", "class_participants"
+  add_foreign_key "rewards", "classrooms"
 end
