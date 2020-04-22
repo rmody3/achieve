@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components'
 
-import httpClient from '../../utils/http_client'
+import httpClient from '@utils/http_client'
 
-import {Header, Title} from '../shared/header'
+import {Header, Title} from '@components/shared/header'
 
 const ListContainer = styled.div`
   display: flex;

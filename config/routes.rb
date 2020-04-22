@@ -19,9 +19,11 @@ Rails.application.routes.draw do
   get 'rewards', to: 'home#index'
   get 'rewards/new', to: 'home#index'
   get 'rewards/:id', to: 'home#index'
+  get 'goals/new', to: 'home#index'
 
   namespace :api do
     resources :classrooms
     resources :rewards
+    resources :goals
   end
 end

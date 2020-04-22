@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 
-import httpClient from '../../utils/http_client'
+import httpClient from '@utils/http_client'
 
-import {Header, Title} from '../shared/header'
-import {Input} from '../shared/input'
-import Submit from '../shared/submit'
+import {Header, Title} from '@components/shared/header'
+import {Input} from '@components/shared/input'
+import Submit from '@components/shared/submit'
 
 
 const NewClassroom = (props) => {

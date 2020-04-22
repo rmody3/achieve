@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 
-import {Header, Title} from '../shared/header'
+import {Header, Title} from '@components/shared/header'
 
-import httpClient from '../../utils/http_client'
+import httpClient from '@utils/http_client'
 
 const ListContainer = styled.div`
   display: flex;
@@ -14,18 +14,20 @@ const ListContainer = styled.div`
   padding: 0px 20px
 `
 
-const Classroom = styled.div`
+const Reward = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   justify-content: space-evenly;
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 400px;
   border: 1px solid black;
   margin: 20px;
   align-self: flex-start;
   border-radius: 8px;
+  overflow-wrap: break-word;
+  padding: 10px
 `
 
 const StyledLink = styled(Link)`
@@ -33,34 +35,36 @@ const StyledLink = styled(Link)`
   color: black;
 `
 
-const ClassroomsIndex = () => {
-  const [classrooms, setClassrooms] = useState([]);
+const RewardsIndex = () => {
+  const [rewards, setRewards] = useState([]);
 
   useEffect(()=> { 
-    httpClient.get('/api/classrooms')
+    httpClient.get('/api/rewards')
     .then(response => {
-      setClassrooms(response.data)
+      setRewards(response.data)
       console.log(response)
     }).catch(response => {
       console.log(response)
     })  
-  }, [classrooms.length])
+  }, [rewards.length])
+
   
   return (
     <>
       <Header>
-        <Link to='/classrooms/new'><h3>+ Add a Classroom</h3></Link>
-        <Title>Classrooms</Title>
+        <Link to='/rewards/new'><h3>+ Add a Reward</h3></Link>
+        <Title>Rewards</Title>
       </Header>
       <ListContainer>
         {
-          classrooms.map((item)=>{
-            return <StyledLink key={item.id} to={`classrooms/${item.id}`}>
-              <Classroom>
-                <h2>{item.name}</h2>
-                <h3>Join Code: {item.join_code}</h3>
-              </Classroom>
-            </StyledLink>
+          rewards.map((item)=>{
+            return (
+              <Reward key={item.id} >
+                <h2>Reward for {item.classroom}</h2>
+                <p>{item.description}</p>
+                <p>AP to Earn Reward: {item.achievement_points}</p>
+              </Reward>
+            )
           })
         }
       </ListContainer>
@@ -68,4 +72,4 @@ const ClassroomsIndex = () => {
   )
 }
 
-export default ClassroomsIndex
+export default RewardsIndex

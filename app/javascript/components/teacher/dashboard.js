@@ -3,13 +3,7 @@ import { connect } from 'react-redux'
 import { Redirect, Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 10px 10px;
-  width: 100%;
-  margin-left: 180px
-`
+import {Header, SubHeader, Title, Subtitle} from '@components/shared/header'
 
 const ListContainer = styled.div`
   display: flex;
@@ -18,26 +12,6 @@ const ListContainer = styled.div`
   flex-wrap: wrap;
   max-width: 100%;
   padding: 0px 20px
-`
-
-const Header = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  width: 100%
-`
-const SubHeader = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  width: 100%
-`
-
-const Title = styled.h1`
-  padding-right: 50px;
-`
-
-const Subtitle = styled.h2`
-  padding-left: 40px;
-  text-decoration: underline;
 `
 
 const Goal = styled.div`
@@ -83,7 +57,7 @@ const goals = [
 
 const TeacherDashboard = (props) => {
   return (
-    <Container>
+    <>
       <Header>
         <Title>Your Teacher Dashboard</Title>
       </Header>
@@ -102,7 +76,7 @@ const TeacherDashboard = (props) => {
           })
         }
       </ListContainer>
-    </Container>
+    </>
   )    
 }
 

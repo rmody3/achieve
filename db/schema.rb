@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_20_034846) do
+ActiveRecord::Schema.define(version: 2020_04_21_060202) do
 
   create_table "class_participants", force: :cascade do |t|
     t.integer "classroom_id"
@@ -32,10 +32,11 @@ ActiveRecord::Schema.define(version: 2020_04_20_034846) do
   create_table "goals", force: :cascade do |t|
     t.integer "class_participant_id"
     t.string "title", null: false
-    t.text "descrption", null: false
+    t.text "description", null: false
     t.date "due_date"
     t.datetime "accomplished_date"
     t.datetime "approved_date"
+    t.integer "achievement_points"
     t.index ["class_participant_id"], name: "index_goals_on_class_participant_id"
     t.index ["due_date"], name: "index_goals_on_due_date"
   end

@@ -1,11 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Redirect, Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import styled from 'styled-components'
 
-import NavBar from './nav_bar'
-import TeacherDashboard from './teacher_dashboard'
-import StudentDashboard from './student_dashboard'
+import TeacherHome from './teacher/home'
+import StudentHome from './student/home'
 
 
 const Container = styled.div`
@@ -18,8 +17,7 @@ const Dashboard = (props) => {
   if (props.loggedIn) {
    return(
     <Container>
-      <NavBar />
-      { props.userType == 'teacher' ? <TeacherDashboard /> : <StudentDashboard /> }
+      { props.userType == 'teacher' ? <TeacherHome /> : <StudentHome /> }
     </Container>
    )
   } else {

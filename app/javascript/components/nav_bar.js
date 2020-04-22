@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 
-import httpClient from '../utils/http_client'
+import httpClient from '@utils/http_client'
 
 import { setBootstrapData } from '../actions'
 
@@ -27,6 +27,14 @@ const Button = styled.button`
   border-radius: 8px
 `
 
+const Header = styled.div`
+  width: inherit;
+`
+
+const StlyedP = styled.p`
+  word-wrap:  break-word;	
+`
+
 const NavBar = (props) => {
 
   const handleLogout = () => {
@@ -46,11 +54,11 @@ const NavBar = (props) => {
 
   return (
     <Container>
-      <div>
+      <Header>
         <h1>Achieve</h1>
         <p>Welcome</p>
-        <p>{props.user.email}</p>
-      </div>
+        <StlyedP>{props.user.email}</StlyedP>
+      </Header>
       <Link to="/dashboard"><Button>Dashboard</Button></Link> 
       <Link to="/classrooms"><Button>Classrooms</Button></Link> 
       <Link to="/rewards"><Button>Rewards</Button></Link>

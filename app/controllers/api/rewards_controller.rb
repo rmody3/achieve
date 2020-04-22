@@ -15,7 +15,6 @@ class Api::RewardsController < ApplicationController
 
   def create
     reward = Reward.new(classroom_id: params[:classId], description: params[:description], achievement_points: params[:achievementPoints])
-    binding.pry
     if reward.save
       render json: {reward: reward}
     else

@@ -6,11 +6,9 @@ import {
 } from "react-router-dom";
 import { connect } from 'react-redux'
 
-import Dashboard from './dashboard'
+import Home from './home'
 import Login from './login'
 import Signup from './signup'
-import Classroom from './classroom'
-import Reward from './reward'
 
 import { setBootstrapData } from '../actions'
 
@@ -20,12 +18,9 @@ const App = (props) => {
   return (
     <Router>
       <Switch>
-        <Route exact path='/' component={Dashboard} />
-        <Route exact path='/dashboard' component={Dashboard} />
         <Route exact path='/login' component={Login} />
         <Route exact path='/signup' component={Signup} />
-        <Route path='/classrooms' component={Classroom} />
-        <Route path='/rewards' component={Reward} />
+        <Route path='/' component={Home} />
       </Switch>       
     </Router>
   )

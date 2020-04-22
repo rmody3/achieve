@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 
-import httpClient from '../../utils/http_client'
+import httpClient from '@utils/http_client'
 
-import {Header, Title} from '../shared/header'
-import {Input, Label, Select} from '../shared/input'
-import Submit from '../shared/submit'
+import {Header, Title} from '@components/shared/header'
+import {Input, Label, Select} from '@components/shared/input'
+import Submit from '@components/shared/submit'
 
-
-const NewReward = (props) => {
+const NewGoal = (props) => {
   const [classId, setClassId] = useState()
+  const [title, setTitle] = useState()
   const [description, setDescription] = useState()
+  const [dueDate, setDueDate] = useState()
   const [achievementPoints, setAchievementPoints] = useState()
   const [classrooms, setClassrooms] = useState([])
 
@@ -25,20 +26,20 @@ const NewReward = (props) => {
     })  
   }, [classrooms.length])
 
-
-
   const handleSave = (e) => {
     e.preventDefault()
 
     let body = {
       classId: classId,
+      title: title,
       description: description,
-      achievementPoints: achievementPoints
+      achievementPoints: achievementPoints,
+      dueDate: dueDate
     }
 
-    httpClient.post('/api/rewards', body)
+    httpClient.post('/api/goals', body)
     .then(response => {
-      props.history.push('/rewards')
+      props.history.push('/dashboard')
       console.log(response)
     }).catch(response => {
       console.log(response)
@@ -48,11 +49,11 @@ const NewReward = (props) => {
   return (
     <>
       <Header>
-        <Title>Add an new Reward</Title>
+        <Title>Add an new Goal</Title>
       </Header>
 
       <Label>
-        <div>Select a Classroom</div>
+        <div>Select a Class for your Goal:</div>
         <Select onChange={e=> setClassId(parseInt(e.target.value))} value={classId}>
           {
             classrooms.map((item) => {
@@ -66,19 +67,35 @@ const NewReward = (props) => {
 
 
       <Input
-        label="Add a Description: "
+        label="Title:"
+        type="text"
+        id="goal"
+        placeholder="a short summary of your goal"
+        onChange={e => setTitle(e.target.value)}
+      />
+
+      <Input
+        label="Description: "
         type="textbox"
         id="description"
-        placeholder="a brief description of the reward"
+        placeholder="a detailed summary of our description"
         onChange={e => setDescription(e.target.value)}
       />
 
       <Input
-        label="Set the Achievement Point Amount: "
+        label="Set the Achievement Points you think you should earn: "
         type="number"
         id="achievement-points"
-        placeholder="points a student needs to earn the reward"
+        placeholder="points you should earn, your teacher will review"
         onChange={e => setAchievementPoints(parseInt(e.target.value))}
+      />
+
+      <Input
+        label="Due Date: "
+        type="date"
+        id="due-date"
+        placeholder="when you want to complete your goal by"
+        onChange={e => setDueDate(e.target.value)}
       />
 
       <Submit
@@ -89,4 +106,4 @@ const NewReward = (props) => {
   )
 }
 
-export default withRouter(NewReward)
+export default withRouter(NewGoal)

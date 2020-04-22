@@ -1,15 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
+
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  useRouteMatch
+  Route
 } from "react-router-dom";
 
-import NavBar from './nav_bar'
-import Index from './rewards'
-import New from './rewards/new'
+import NavBar from '../nav_bar'
+import Dashboard from './dashboard'
+import GoalsNew from './goals/new'
+
 
 const Container = styled.div`
   width: 100%;
@@ -28,17 +29,17 @@ const Layout = (props) => {
   )
 }
 
-const Reward = (props) => { 
-  let {path, url} = useRouteMatch()
+const Home = (props) => { 
 
   return (
     <Layout>
       <Switch>
-        <Route exact path={path} component={Index} />
-        <Route exact path={`${path}/new`} component={New} />
+        <Route exact path={'/dashboard'} component={Dashboard} />
+        <Route exact path={'/goals/new'} component={GoalsNew} />
+        <Route path={'/'} component={Dashboard} />
       </Switch>       
     </Layout>
   )
 }
 
-export default Reward
+export default Home
