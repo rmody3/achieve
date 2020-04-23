@@ -27,5 +27,6 @@ Rails.application.routes.draw do
     resources :rewards
     resources :goals
     resources :class_participants
+    resources :comments
   end
 end

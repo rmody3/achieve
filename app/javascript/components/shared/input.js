@@ -12,6 +12,7 @@ const StyledInput = styled.input`
 export const Label = styled.label`
   display: flex
   flex-direction: column;
+  font-weight: bold;
 `
 
 export const Select = styled.select`

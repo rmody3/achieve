@@ -12,7 +12,7 @@ const Button = styled.button`
 `
 
 const Submit = (props) => {
-  return <Button onClick={props.onClick}>{props.label}</Button>
+  return <Button className={props.className} onClick={props.onClick}>{props.label}</Button>
 }
 
 export default Submit

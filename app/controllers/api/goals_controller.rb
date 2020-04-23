@@ -47,12 +47,23 @@ class Api::GoalsController < ApplicationController
 
   def show
     goal = Goal.find_by_id(params[:id])
-    
-    if goal
-      render json: goal.to_json
-    else
-      render json: {errors: 'cannot find goal'}
+
+    unless goal
+      return render json: {errors: 'cannot find goal'}
     end
+
+    comments = Comment.includes(:author).where(goal: goal).map do |c| 
+      {
+        author_type: c.author_type.downcase,
+        email: c.author.email,
+        body: c.body
+      } 
+    end
+    
+    render json: {
+      goal: goal,
+      comments: comments
+    }.to_json
   end
 
   def update

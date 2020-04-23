@@ -6,4 +6,5 @@ class Teacher < ApplicationRecord
   
   has_many :classrooms, dependent: :destroy
   has_many :rewards, through: :classrooms
+  has_many :comments, as: :author
 end

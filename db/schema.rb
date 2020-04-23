@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_22_013425) do
+ActiveRecord::Schema.define(version: 2020_04_23_023159) do
 
   create_table "class_participants", force: :cascade do |t|
     t.integer "classroom_id"
@@ -27,6 +27,17 @@ ActiveRecord::Schema.define(version: 2020_04_22_013425) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["teacher_id"], name: "index_classrooms_on_teacher_id"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.string "author_type"
+    t.integer "author_id"
+    t.integer "goal_id"
+    t.text "body"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["author_type", "author_id"], name: "index_comments_on_author_type_and_author_id"
+    t.index ["goal_id"], name: "index_comments_on_goal_id"
   end
 
   create_table "goals", force: :cascade do |t|
