@@ -14,7 +14,7 @@ const ListContainer = styled.div`
   padding: 0px 20px
 `
 
-const Participant = styled.div`
+const Goal = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,37 +35,43 @@ const StyledLink = styled(Link)`
 `
 
 const ClassroomShow = () => {
-  let { classroomId } = useParams([])
-  const [classroom, setClassroom] = useState();
-  const [students, setStudents] = useState([]);
+  let { classroomId } = useParams()
+  const [goals, setGoals] = useState([])
+  const [classroom, setClassroom] = useState()
 
   useEffect(()=> { 
-    httpClient.get(`/api/classrooms/${classroomId}`)
+    httpClient.get(`/api/class_participants/${classroomId}`)
     .then(response => {
+      setGoals(response.data.goals)
       setClassroom(response.data.classroom)
-      setStudents(response.data.students)
       console.log(response)
     }).catch(response => {
       console.log(response)
     })  
-  }, [students.length])
+  }, [goals.length])
 
-  const showStudents = () => {
-    if (students.length > 0) {
+  const showGoals = () => {
+    if (goals.length > 0) {
       return (
-        students.map((item)=>{
-          return <StyledLink key={item.id} to={`students/${item.id}`}>
-            <Participant>
-              <h3>{item.email}</h3>
-            </Participant>
+        goals.map((item)=>{
+          return <StyledLink key={item.id} to={`goals/${item.id}`}>
+            <Goal>
+              <h4>Goal: {item.title}</h4>
+              <p>Description: {item.description}</p>
+              <h4>Due Date: {item.due_date}</h4>
+              <h4>Achievement Points: {item.achievement_points}</h4>
+            </Goal>
           </StyledLink>
         })
       )
     } else {
       return (
-        <h3>
-          {`No Students are in this class at this time. Make sure to send them the classroom Join Code: ${classroom.join_code}`}
-        </h3>
+        <Link to="goals/new">
+          <h3>
+            {"You dont have any goals for this class, set one up now"}
+          </h3>
+        </Link>
+        
       )
     }
   }
@@ -73,10 +79,10 @@ const ClassroomShow = () => {
   return (
     <>
       <Header>
-        <Title>{classroom.name}</Title>
+        <Title>{classroom ? classroom.name : 'Loading'}</Title>
       </Header>
       <ListContainer>
-        {showStudents()}
+        {showGoals()}
       </ListContainer>
     </>
   )

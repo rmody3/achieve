@@ -10,7 +10,10 @@ import {
 import NavBar from '../nav_bar'
 import Dashboard from './dashboard'
 import GoalsNew from './goals/new'
-
+import GoalsShow from './goals/show'
+import ClassroomsIndex from './classrooms/index'
+import ClassroomsShow from './classrooms/show'
+import ClassroomsNew from './classrooms/new'
 
 const Container = styled.div`
   width: 100%;
@@ -36,6 +39,10 @@ const Home = (props) => {
       <Switch>
         <Route exact path={'/dashboard'} component={Dashboard} />
         <Route exact path={'/goals/new'} component={GoalsNew} />
+        <Route exact path={'/goals/:id'} component={GoalsShow} />
+        <Route exact path={'/classrooms'} component={ClassroomsIndex} />
+        <Route exact path={'/classrooms/new'} component={ClassroomsNew} />
+        <Route exact path={'/classrooms/:classroomId'} component={ClassroomsShow} />
         <Route path={'/'} component={Dashboard} />
       </Switch>       
     </Layout>

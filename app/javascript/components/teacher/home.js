@@ -40,7 +40,7 @@ const Home = (props) => {
         <Route exact path={'/dashboard'} component={Dashboard} />
         <Route exact path={'/classrooms'} component={ClassroomsIndex} />
         <Route exact path={'/classrooms/new'} component={ClassroomsNew} />
-        <Route exact path={'/classrooms/classroomId'} component={ClassroomsShow} />
+        <Route exact path={'/classrooms/:classroomId'} component={ClassroomsShow} />
         <Route exact path={'/rewards'} component={RewardsIndex} />
         <Route exact path={'/rewards/new'} component={RewardsNew} />
         <Route path={'/'} component={Dashboard} />

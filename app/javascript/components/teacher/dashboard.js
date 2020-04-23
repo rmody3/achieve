@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Redirect, Link } from 'react-router-dom'
 import styled from 'styled-components'
+
+import httpClient from '@utils/http_client'
 
 import {Header, SubHeader, Title, Subtitle} from '@components/shared/header'
 
@@ -31,31 +33,19 @@ const StyledLink = styled(Link)`
   color: black;
 `
 
-const goals = [
-  {
-    id: 1,
-    participant: 'John Doe',
-    title: 'Read 5 books',
-    description: 'This quarter I want to read 5 books',
-    due_date: '4/1/2020'
-  },
-  {
-    id: 2,
-    participant: 'Alice',
-    title: 'Get a b or higher on every test',
-    description: 'This quarter I want to maintain high grades on my tests',
-    due_date: '4/1/2020'
-  },
-  {
-    id: 3,
-    participant: 'Bob',
-    title: 'Help mentor another student',
-    description: 'This quarter I want help another student with any problems they might have',
-    due_date: '4/1/2020'
-  }
-]
-
 const TeacherDashboard = (props) => {
+  const [goals, setGoals] = useState([]) 
+
+  useEffect(()=> { 
+    httpClient.get('/api/goals')
+    .then(response => {
+      setGoals(response.data)
+      console.log(response)
+    }).catch(response => {
+      console.log(response)
+    })  
+  }, [goals.length])
+
   return (
     <>
       <Header>
@@ -67,10 +57,12 @@ const TeacherDashboard = (props) => {
           goals.map((item)=>{
             return <StyledLink key={item.id} to={`goals/${item.id}`}>
               <Goal>
+                <h3>Student: {item.email}</h3>
                 <h4>Goal: {item.title}</h4>
                 <p>Description: {item.description}</p>
-                <h4>Student: {item.participant}</h4>
+                <h4>Class: {item.classroom_name}</h4>
                 <h4>Due Date: {item.due_date}</h4>
+                <h4>Achievement Points: {item.achievement_points}</h4>
               </Goal>
             </StyledLink>
           })

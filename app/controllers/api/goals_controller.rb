@@ -3,11 +3,20 @@ class Api::GoalsController < ApplicationController
   before_action :authenticate_student!, only: [:create, :destroy]
 
   def index
-    goals = current_user.goals
-    .joins(:class_participant => :classroom)
-    .select('goals.id, goals.title, goals.description, goals.due_date, goals.achievement_points, classrooms.name as classroom_name')
-    .order(updated_at: :desc)
 
+    if current_user_type == 'student'
+      goals = current_student.goals
+        .joins(:class_participant => :classroom)
+        .select('goals.id, goals.title, goals.description, goals.due_date, goals.achievement_points, classrooms.name as classroom_name')
+        .order('goals.updated_at': :desc)  
+    else
+      goals = current_teacher.classrooms
+        .joins(class_participants: [:goals, :student])
+        .select('goals.id, goals.title, goals.description, goals.due_date, goals.achievement_points, students.email, classrooms.name as classroom_name')
+        .order('goals.updated_at')
+        .limit(10)
+    end
+   
     render json: goals.to_json
   end
 
@@ -37,12 +46,10 @@ class Api::GoalsController < ApplicationController
   end
 
   def show
-    reward = Goal.find_by_id(params[:id])
+    goal = Goal.find_by_id(params[:id])
     
-    if reward
-      render json: {
-        reward: reward
-      }
+    if goal
+      render json: goal.to_json
     else
       render json: {errors: 'cannot find goal'}
     end
