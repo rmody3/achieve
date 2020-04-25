@@ -1,6 +1,21 @@
 class Api::ClassParticipantsController < ApplicationController
-  before_action :authenticate_student!
+  before_action :authenticate_user!
+  before_action :authentication_student!, only: [:create]
 
+  def index
+    participants = current_student.class_participants.includes(:classroom).map do |c| 
+      {
+        participantId: c.id,
+        classroom: c.classroom
+      } 
+    end
+
+    if participants
+      render json: participants.to_json
+    else
+      render json: {errors: participants.errors.to_json}
+    end
+  end
 
   def create 
     classroom = Classroom.find_by(join_code: params[:joinCode])
@@ -20,7 +35,7 @@ class Api::ClassParticipantsController < ApplicationController
 
 
   def show
-    class_participant = ClassParticipant.find_by(student: current_student, classroom_id: params[:id])
+    class_participant = ClassParticipant.find(params[:id])
 
     render json: {
       goals: class_participant&.goals,

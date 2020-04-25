@@ -26,7 +26,12 @@ class Api::ClassroomsController < ApplicationController
     if classroom
       render json: {
         classroom: classroom,
-        students: classroom.students
+        students: classroom.class_participants.joins(:student).map do |cp|
+          {
+            email: cp.student.email,
+            participantId: cp.id
+          }
+        end
       }
     else
       render json: {errors: 'cannot find classroom'}

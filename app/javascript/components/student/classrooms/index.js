@@ -37,7 +37,7 @@ const ClassroomsIndex = () => {
   const [classrooms, setClassrooms] = useState([]);
 
   useEffect(()=> { 
-    httpClient.get('/api/classrooms')
+    httpClient.get('/api/class_participants')
     .then(response => {
       setClassrooms(response.data)
       console.log(response)
@@ -55,9 +55,9 @@ const ClassroomsIndex = () => {
       <ListContainer>
         {
           classrooms.map((item)=>{
-            return <StyledLink key={item.id} to={`classrooms/${item.id}`}>
+            return <StyledLink key={item.participantId} to={`classrooms/${item.participantId}`}>
               <Classroom>
-                <h2>{item.name}</h2>
+                <h2>{item.classroom.name}</h2>
               </Classroom>
             </StyledLink>
           })

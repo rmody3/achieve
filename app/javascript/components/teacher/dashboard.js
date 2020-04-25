@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import httpClient from '@utils/http_client'
 
 import {Header, SubHeader, Title, Subtitle} from '@components/shared/header'
+import { ApproveNotice } from '@components/shared/goal'
 
 const ListContainer = styled.div`
   display: flex;
@@ -57,6 +58,7 @@ const TeacherDashboard = (props) => {
           goals.map((item)=>{
             return <StyledLink key={item.id} to={`goals/${item.id}`}>
               <Goal>
+                <ApproveNotice approvedDate={item.approved_date} />
                 <h3>Student: {item.email}</h3>
                 <h4>Goal: {item.title}</h4>
                 <p>Description: {item.description}</p>

@@ -5,9 +5,8 @@ import styled from 'styled-components'
 import httpClient from '@utils/http_client'
 
 import {Header, Title, SubHeader, Subtitle} from '@components/shared/header'
-import {Input} from '@components/shared/input'
+import {Input, Button} from '@components/shared/input'
 import Submit from '@components/shared/submit'
-import { ApproveNotice } from '@components/shared/goal'
 
 const ListContainer = styled.div`
   display: flex;
@@ -24,9 +23,8 @@ const Goal = styled.div`
   text-align: center;
   justify-content: space-evenly;
   width: 100%;
-  height: 200px;
   border: 1px solid black;
-  margin: 20px;
+  margin: 20px 20px 0px 20px;
   align-self: flex-start;
   border-radius: 8px;
   word-wrap: normal;
@@ -41,7 +39,7 @@ const CommentsContainer = styled.div`
   overflow: auto;
 `
 
-// student comments on right side
+// teaacher comments on right side
 const Comment = styled.div`
   max-width: 75%;
   display: flex;
@@ -51,16 +49,21 @@ const Comment = styled.div`
   flex-direction: column;
   border-radius: 5px;
 
-  &.student {
+  &.teacher {
     padding-right: 5px;
     text-align: right;
     margin-left: auto;
   }
 
-  &.teacher {
+  &.student {
     padding-left: 5px;
     text-align: left;
   }
+`
+
+const StyledTitle = styled(Title)`
+  background-color: lightgreen;
+  border-radius: 5px;
 `
 
 const Strong = styled.strong`
@@ -74,7 +77,7 @@ const AddCommentContainer = styled.div`
 
 const StyledSubmit = styled(Submit)`
   && {
-    margin: 0px;
+    margin: 0px 0px 20px;
   }
 `
 
@@ -83,8 +86,10 @@ const GoalShow = () => {
   const [goal, setGoal] = useState({})
   const [comments, setComments] = useState([])
   const [commentBody, setCommentBody] = useState()
+  const [dueDate, setDueDate] = useState()
+  const [achievementPoints, setAchievementPoints] = useState()
 
-  const handleSave = (e) => {
+  const handleCommentSave = (e) => {
     e.preventDefault()
 
     let body = {
@@ -99,6 +104,40 @@ const GoalShow = () => {
     }).catch(response => {
       console.log(response)
     })
+  } 
+
+  const updateGoal = (e) => {
+    e.preventDefault()
+
+    let body = {
+      goalId: id, 
+      dueDate: dueDate,
+      achievementPoints: achievementPoints
+    }
+
+    httpClient.put(`/api/goals/${id}`, body)
+    .then(response => {
+      setGoal(response.data)
+      console.log(response)
+    }).catch(response => {
+      console.log(response)
+    })
+  } 
+
+  const approveGoal = (e) => {
+    e.preventDefault()
+
+    let body = {
+      approvedDate: Date.now()
+    }
+
+    httpClient.put(`/api/goals/${id}`, body)
+    .then(response => {
+      setGoal(response.data)
+      console.log(response)
+    }).catch(response => {
+      console.log(response)
+    })
   }  
 
   useEffect(()=> { 
@@ -106,43 +145,78 @@ const GoalShow = () => {
     .then(response => {
       setGoal(response.data.goal)
       setComments(response.data.comments)
+      setDueDate(response.data.goal.due_date)
+      setAchievementPoints(response.data.goal.achievement_points)
       console.log(response)
     }).catch(response => {
       console.log(response)
     })  
   }, [goal.size])
+
+  const showApproved = () => {
+    if(goal && goal.approved_date != null){
+      return <StyledTitle>Approved!</StyledTitle>
+    } else {
+      return (
+        <Submit label="Approve" onClick={approveGoal} />
+      ) 
+    }
+  }
   
   return (
     <>
       <Header>
+        {showApproved()}
         <Title>Goal: {goal ? goal.title : 'Loading'}</Title>
       </Header>
       <ListContainer>
         <Goal>
-          <ApproveNotice approvedDate={item.approved_date} />
           <p>Description: {goal.description}</p>
-          <h4>Due Date: {goal.due_date}</h4>
-          <h4>Achievement Points: {goal.achievement_points}</h4>
+          <Input
+            label="Due Date: "
+            type="textbox"
+            id="due-date"
+            placeholder=""
+            defaultValue={dueDate}
+            onChange={e => setDueDate(e.target.value)}
+            disabled={!!goal.approved_date}
+          />
+          <Input
+            label="Achievement Points: "
+            type="textbox"
+            id="achievement-points"
+            placeholder=""
+            defaultValue={achievementPoints}
+            onChange={e => setAchievementPoints(e.target.value)}
+            disabled={!!goal.approved_date}
+          />
+          <StyledSubmit
+            label='Save Changes'
+            onClick={updateGoal}
+            disabled={!!goal.approved_date}
+          />
         </Goal>
       </ListContainer>
       <SubHeader>
-        <Subtitle>{comments.length > 0 ? 'Updates' : 'No Updates provided'}</Subtitle>
+        <Subtitle>{comments.length > 0 ? 'Updates' : 'Add Your Comments'}</Subtitle>
       </SubHeader>
       <CommentsContainer>
-        {
-          comments.map((c,i) => {
-            return (
-              <Comment key={i} className={c.author_type} >
-                <Strong> {c.email} </Strong>
-                <div>{c.body}</div>
-              </Comment>
-            ) 
-          })
-        }
+        <div>
+          {
+            comments.map((c,i) => {
+              return (
+                <Comment key={i} className={c.author_type} >
+                  <Strong> {c.email} </Strong>
+                  <div>{c.body}</div>
+                </Comment>
+              ) 
+            })
+          }
+        </div>
       </CommentsContainer>
       <AddCommentContainer>
         <Input
-          label="Add an Update: "
+          label="Add Feedback: "
           type="textbox"
           id="update"
           placeholder=""
@@ -151,7 +225,8 @@ const GoalShow = () => {
 
         <StyledSubmit
           label='Add'
-          onClick={handleSave}
+          onClick={handleCommentSave}
+          disabled={!!goal.approved_date}
         />
       </AddCommentContainer>
     </>

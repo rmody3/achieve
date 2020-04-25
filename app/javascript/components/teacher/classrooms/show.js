@@ -26,7 +26,7 @@ const Participant = styled.div`
   margin: 20px;
   align-self: flex-start;
   border-radius: 8px;
-  word-wrap: normal;
+  word-break: break-word;
 `
 
 const StyledLink = styled(Link)`
@@ -54,7 +54,7 @@ const ClassroomShow = () => {
     if (students.length > 0) {
       return (
         students.map((item)=>{
-          return <StyledLink key={item.id} to={`students/${item.id}`}>
+          return <StyledLink key={item.participantId} to={`/participants/${item.participantId}`}>
             <Participant>
               <h3>{item.email}</h3>
             </Participant>
@@ -64,7 +64,7 @@ const ClassroomShow = () => {
     } else {
       return (
         <h3>
-          {`No Students are in this class at this time. Make sure to send them the classroom Join Code: ${classroom.join_code}`}
+          {`No Students are in this class at this time. Make sure to send them the classroom Join Code ${classroom ? ': ' + classroom.join_code : ''}`}
         </h3>
       )
     }
@@ -73,7 +73,7 @@ const ClassroomShow = () => {
   return (
     <>
       <Header>
-        <Title>{classroom.name}</Title>
+        <Title>{classroom ? classroom.name : 'Loading'}</Title>
       </Header>
       <ListContainer>
         {showStudents()}

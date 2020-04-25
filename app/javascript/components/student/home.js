@@ -12,7 +12,7 @@ import Dashboard from './dashboard'
 import GoalsNew from './goals/new'
 import GoalsShow from './goals/show'
 import ClassroomsIndex from './classrooms/index'
-import ClassroomsShow from './classrooms/show'
+import ClassroomShow from './classrooms/show'
 import ClassroomsNew from './classrooms/new'
 
 const Container = styled.div`
@@ -42,7 +42,7 @@ const Home = (props) => {
         <Route exact path={'/goals/:id'} component={GoalsShow} />
         <Route exact path={'/classrooms'} component={ClassroomsIndex} />
         <Route exact path={'/classrooms/new'} component={ClassroomsNew} />
-        <Route exact path={'/classrooms/:classroomId'} component={ClassroomsShow} />
+        <Route exact path={'/classrooms/:id'} component={ClassroomShow} />
         <Route path={'/'} component={Dashboard} />
       </Switch>       
     </Layout>

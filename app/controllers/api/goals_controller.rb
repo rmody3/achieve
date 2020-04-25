@@ -3,16 +3,15 @@ class Api::GoalsController < ApplicationController
   before_action :authenticate_student!, only: [:create, :destroy]
 
   def index
-
     if current_user_type == 'student'
       goals = current_student.goals
         .joins(:class_participant => :classroom)
-        .select('goals.id, goals.title, goals.description, goals.due_date, goals.achievement_points, classrooms.name as classroom_name')
+        .select('goals.id, goals.title, goals.description, goals.due_date, goals.achievement_points, goals.approved_date, classrooms.name as classroom_name')
         .order('goals.updated_at': :desc)  
     else
       goals = current_teacher.classrooms
         .joins(class_participants: [:goals, :student])
-        .select('goals.id, goals.title, goals.description, goals.due_date, goals.achievement_points, students.email, classrooms.name as classroom_name')
+        .select('goals.id, goals.title, goals.description, goals.due_date, goals.achievement_points, goals.approved_date, students.email, classrooms.name as classroom_name')
         .order('goals.updated_at')
         .limit(10)
     end
@@ -67,9 +66,21 @@ class Api::GoalsController < ApplicationController
   end
 
   def update
+    goal = Goal.find(params[:id])
+    goal.assign_attributes(
+      achievement_points: params[:achievementPoints] || goal.achievement_points,
+      due_date: params[:dueDate] || goal.due_date,
+      approved_date: (params[:approvedDate] ? Time.at(params[:approvedDate]/1000.0) : goal.approved_date)
+    )
+   
+    if goal.save
+      render json: goal.to_json
+    else
+      render json: {errors: goal.errors.to_json}
+    end
   end
 
   def strong_params
-    params.permit(:id, :classId, :title, :description, :achievementPoints, :dueDate)
+    params.permit(:id, :classId, :title, :description, :achievementPoints, :dueDate, :approvedDate)
   end
 end

@@ -4,8 +4,8 @@ import styled from 'styled-components'
 
 import httpClient from '@utils/http_client'
 
-import { ApproveNotice } from '@components/shared/goal'
 import {Header, Title} from '@components/shared/header'
+import { ApproveNotice } from '@components/shared/goal'
 
 const ListContainer = styled.div`
   display: flex;
@@ -19,20 +19,24 @@ const Goal = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 50%;
-  min-hieght: 100px;
+  text-align: center;
+  justify-content: space-evenly;
+  width: 200px;
+  height: 200px;
   border: 1px solid black;
   margin: 20px;
   align-self: flex-start;
   border-radius: 8px;
+  word-wrap: normal;
 `
+
 
 const StyledLink = styled(Link)`
   text-decoration: none;
   color: black;
 `
 
-const ClassroomShow = () => {
+const ParticipantShow = () => {
   let { id } = useParams()
   const [goals, setGoals] = useState([])
   const [classroom, setClassroom] = useState()
@@ -65,12 +69,9 @@ const ClassroomShow = () => {
       )
     } else {
       return (
-        <Link to="goals/new">
-          <h3>
-            {"You dont have any goals for this class, set one up now"}
-          </h3>
-        </Link>
-        
+        <h3>
+          "Student does not have any goals for this class yet"
+        </h3>
       )
     }
   }
@@ -87,4 +88,4 @@ const ClassroomShow = () => {
   )
 }
 
-export default ClassroomShow
+export default ParticipantShow

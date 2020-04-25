@@ -14,6 +14,8 @@ import ClassroomsNew from './classrooms/new'
 import ClassroomsShow from './classrooms/show'
 import RewardsIndex from './rewards'
 import RewardsNew from './rewards/new'
+import GoalShow from './goals/show'
+import ParticipantShow from './participants/show'
 
 const Container = styled.div`
   width: 100%;
@@ -43,6 +45,8 @@ const Home = (props) => {
         <Route exact path={'/classrooms/:classroomId'} component={ClassroomsShow} />
         <Route exact path={'/rewards'} component={RewardsIndex} />
         <Route exact path={'/rewards/new'} component={RewardsNew} />
+        <Route exact path={'/goals/:id'} component={GoalShow} />
+        <Route exact path={'/participants/:id'} component={ParticipantShow} />
         <Route path={'/'} component={Dashboard} />
       </Switch>       
     </Layout>

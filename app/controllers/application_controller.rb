@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   helper_method :current_user, :authorized_user?, :authenticate_user!, :user_signed_in?, :bootstrap_data
-  
+  respond_to :json
+
   def current_user
     current_teacher || current_student
   end

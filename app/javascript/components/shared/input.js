@@ -38,7 +38,19 @@ export const Input = (props) => {
         id= {props.id}
         placeholder={props.placeholder}
         onChange={props.onChange}
+        defaultValue={props.defaultValue || undefined}
+        disabled={props.disabled || false}
       />
     </Label>
   )
 }
+
+export const Button = styled.button`
+  background-color: blue;
+  color: white;
+  border: 1px solid black;
+  border-radius: 8px;
+  margin: 20px 0px;
+  height: 40px;
+  width: 80px;
+`
