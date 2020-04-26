@@ -73,15 +73,15 @@ class Api::RewardsController < ApplicationController
     achieved_reward = AchievedReward.new(class_participant: class_participant, reward: reward)
 
     begin
-      achieved_reward.save
       service = ::AchievementPointsService.spend(class_participant.student, reward.achievement_points)
       if service.success
+        achieved_reward.save
         render json: achieved_reward.to_json
       else
         render json: service.data
       end
     rescue ActiveRecord::RecordNotUnique => error
-      render json: {errors: error.to_json}
+      render json: error.to_json
     end
   end
 
