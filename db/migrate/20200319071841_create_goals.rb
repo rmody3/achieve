@@ -7,7 +7,7 @@ class CreateGoals < ActiveRecord::Migration[6.0]
       t.date :due_date
       t.timestamp :accomplished_date
       t.timestamp :approved_date
-
+      t.timestamps
       t.index :due_date
     end
   end

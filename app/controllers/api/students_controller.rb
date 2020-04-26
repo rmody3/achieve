@@ -8,7 +8,7 @@ class Api::StudentsController < ApplicationController
       level: current_student.level,
       points_total: current_student.points_total,
       points_remaining: current_student.points_remaining,
-      badges: 'a badge'
+      badges: ::BadgeService.get(current_student)
     }
 
     render json: response.to_json 

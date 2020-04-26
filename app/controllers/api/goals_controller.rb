@@ -34,6 +34,7 @@ class Api::GoalsController < ApplicationController
       achievement_points: params[:achievementPoints])
 
     if goal.save
+      ::BadgeService.performOnCreate(goal)
       render json: {goal: goal}
     else
       render json: {errors: reward.errors.to_json}
@@ -87,9 +88,8 @@ class Api::GoalsController < ApplicationController
     
     if goal.save && goal.approved?
       student = goal.class_participant.student
-      binding.pry
+      ::BadgeService.performOnApprove(goal)
       service = ::AchievementPointsService.add(student, goal.achievement_points)
-
       if service.success
         render json: goal.to_json
       else

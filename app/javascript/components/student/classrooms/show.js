@@ -53,9 +53,9 @@ const ClassroomShow = () => {
       )
     } else {
       return (
-        <Link to="goals/new">
+        <Link to="/goals/new">
           <h3>
-            {"You dont have any goals for this class, set one up now"}
+            You dont have any goals for this class, set one up now
           </h3>
         </Link>
         

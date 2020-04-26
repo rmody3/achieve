@@ -1,6 +1,6 @@
 class Api::ClassParticipantsController < ApplicationController
   before_action :authenticate_user!
-  before_action :authentication_student!, only: [:create]
+  before_action :authenticate_student!, only: [:create]
 
   def index
     participants = current_student.class_participants.includes(:classroom).map do |c| 
@@ -46,7 +46,7 @@ class Api::ClassParticipantsController < ApplicationController
         level: class_participant.student.level,
         points_total: class_participant.student.points_total,
         points_remaining: class_participant.student.points_remaining,
-        badges: 'a badge'
+        badges: ::BadgeService.get(class_participant.student)
       }
     }.to_json
   end

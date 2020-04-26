@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import BadgeIcon from '@components/shared/badge_icon'
 
 const Container = styled.div`
   display: flex;
@@ -33,6 +34,8 @@ const Value = styled.p`
 const BadgeList = styled.div`
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding: 10px;
 `
 
 const Strong = styled.strong`
@@ -47,9 +50,19 @@ const  AccountSummary = (props) => {
         <Value>{props.studentInfo.level}</Value>
       </Box>
       <Box>
-        <Title>YOUR BADGES</Title>
-        <Value>{props.studentInfo.badges}</Value>
-        <BadgeList></BadgeList>
+        <Title>BADGES</Title>
+        <BadgeList>
+          { props.studentInfo.badges &&
+            props.studentInfo.badges.map((item, ind)=>{
+              return (
+                <BadgeIcon key={ind}
+                  file={item.file}
+                  description={item.description}
+                />
+              )
+            })
+          }
+        </BadgeList>
       </Box>
       <Box>
         <Title>POINTS EARNED</Title>

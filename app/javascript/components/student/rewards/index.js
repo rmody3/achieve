@@ -46,7 +46,6 @@ const RewardsIndex = () => {
     httpClient.post(`/api/rewards/${rewardId}/claim`)
     .then(response => {
       setRewards([])
-      setClaimedRewards([])
       console.log(response)
     }).catch(response => {
       console.log(response)

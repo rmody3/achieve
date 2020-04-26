@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_25_205041) do
+ActiveRecord::Schema.define(version: 2020_04_26_062050) do
 
   create_table "achieved_rewards", force: :cascade do |t|
     t.integer "class_participant_id"
@@ -20,6 +20,14 @@ ActiveRecord::Schema.define(version: 2020_04_25_205041) do
     t.index ["class_participant_id", "reward_id"], name: "index_achieved_rewards_on_class_participant_id_and_reward_id", unique: true
     t.index ["class_participant_id"], name: "index_achieved_rewards_on_class_participant_id"
     t.index ["reward_id"], name: "index_achieved_rewards_on_reward_id"
+  end
+
+  create_table "badges", force: :cascade do |t|
+    t.integer "student_id"
+    t.string "kind"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["student_id"], name: "index_badges_on_student_id"
   end
 
   create_table "class_participants", force: :cascade do |t|
@@ -57,9 +65,9 @@ ActiveRecord::Schema.define(version: 2020_04_25_205041) do
     t.date "due_date"
     t.datetime "accomplished_date"
     t.datetime "approved_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.integer "achievement_points"
-    t.datetime "updated_at", precision: 6, default: "2020-04-22 01:40:36", null: false
-    t.datetime "created_at", precision: 6, default: "2020-04-22 01:40:36", null: false
     t.index ["class_participant_id"], name: "index_goals_on_class_participant_id"
     t.index ["due_date"], name: "index_goals_on_due_date"
   end

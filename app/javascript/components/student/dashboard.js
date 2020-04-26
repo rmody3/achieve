@@ -53,7 +53,7 @@ const StudentDashboard = (props) => {
       <Header>
         <Title>Your Student Dashboard</Title>
       </Header>
-      <AccountSummary studentInfo={studentInfo} />      
+      <AccountSummary studentInfo={studentInfo} /> 
       <SubHeader>
         <Subtitle>Your Goals</Subtitle>
         <Link to='/goals/new'>
