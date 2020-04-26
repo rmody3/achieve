@@ -15,7 +15,7 @@ export const SubHeader = styled.div`
 
 export const Title = styled.h1`
   padding: 0 50px;
-  `
+`
 
 export const Subtitle = styled.h2`
   padding: 0px 40px;

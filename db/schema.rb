@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_23_023159) do
+ActiveRecord::Schema.define(version: 2020_04_25_205041) do
+
+  create_table "achieved_rewards", force: :cascade do |t|
+    t.integer "class_participant_id"
+    t.integer "reward_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["class_participant_id", "reward_id"], name: "index_achieved_rewards_on_class_participant_id_and_reward_id", unique: true
+    t.index ["class_participant_id"], name: "index_achieved_rewards_on_class_participant_id"
+    t.index ["reward_id"], name: "index_achieved_rewards_on_reward_id"
+  end
 
   create_table "class_participants", force: :cascade do |t|
     t.integer "classroom_id"
@@ -71,6 +81,8 @@ ActiveRecord::Schema.define(version: 2020_04_23_023159) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "points_total", default: 0
+    t.integer "points_remaining", default: 0
     t.index ["email"], name: "index_students_on_email", unique: true
     t.index ["reset_password_token"], name: "index_students_on_reset_password_token", unique: true
   end

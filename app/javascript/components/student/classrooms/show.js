@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import httpClient from '@utils/http_client'
 
-import { ApproveNotice } from '@components/shared/goal'
+import { ApproveNotice, Goal } from '@components/shared/goal'
 import {Header, Title} from '@components/shared/header'
 
 const ListContainer = styled.div`
@@ -13,18 +13,6 @@ const ListContainer = styled.div`
   flex-wrap: wrap;
   max-width: 100%;
   padding: 0px 20px
-`
-
-const Goal = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 50%;
-  min-hieght: 100px;
-  border: 1px solid black;
-  margin: 20px;
-  align-self: flex-start;
-  border-radius: 8px;
 `
 
 const StyledLink = styled(Link)`

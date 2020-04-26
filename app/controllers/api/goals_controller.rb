@@ -72,9 +72,29 @@ class Api::GoalsController < ApplicationController
       due_date: params[:dueDate] || goal.due_date,
       approved_date: (params[:approvedDate] ? Time.at(params[:approvedDate]/1000.0) : goal.approved_date)
     )
-   
+    
     if goal.save
+
       render json: goal.to_json
+    else
+      render json: {errors: goal.errors.to_json}
+    end
+  end
+
+  def approve
+    goal = Goal.find(params[:id])
+    goal.assign_attributes(approved_date: Time.at(params[:approvedDate]/1000.0))
+    
+    if goal.save && goal.approved?
+      student = goal.class_participant.student
+      binding.pry
+      service = ::AchievementPointsService.add(student, goal.achievement_points)
+
+      if service.success
+        render json: goal.to_json
+      else
+        render json: service.data
+      end
     else
       render json: {errors: goal.errors.to_json}
     end

@@ -1,8 +1,6 @@
 class SessionsController < Devise::SessionsController
-  # prepend_before_filter :verify_user, only: [:destroy]
-
+  # after_filter :set_csrf_headers, only: [:create, :destroy]
   respond_to :json
-
   def new
     super
   end
@@ -17,9 +15,19 @@ class SessionsController < Devise::SessionsController
     end
   end
 
-  def destroy
-    super
+  def destroy # Assumes only JSON requests
+    signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
+    render :json => {
+        'csrfParam' => request_forgery_protection_token,
+        'csrfToken' => form_authenticity_token
+    }
   end
+
+  protected
+  
+  # def set_csrf_headers
+  #   cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?  
+  # end
 
   # def verify_user
   #   ## redirect to appropriate path

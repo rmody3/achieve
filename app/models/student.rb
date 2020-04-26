@@ -7,4 +7,6 @@ class Student < ApplicationRecord
   has_many :class_participants
   has_many :classrooms, through: :class_participants
   has_many :goals, through: :class_participants
+  has_many :rewards, through: :classrooms
+  has_many :achieved_rewards, through: :class_participants
 end

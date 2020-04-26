@@ -18,6 +18,7 @@ const Container = styled.div`
   align-items: center;
   text-align: center;
   position: fixed; 
+  background-color: #FFC447;
 `
 
 const Button = styled.button`

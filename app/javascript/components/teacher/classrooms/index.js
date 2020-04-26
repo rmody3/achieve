@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 
 import {Header, Title} from '@components/shared/header'
+import {Button} from '@components/shared/input'
 
 import httpClient from '@utils/http_client'
 
@@ -22,10 +23,11 @@ const Classroom = styled.div`
   justify-content: space-evenly;
   width: 150px;
   height: 150px;
-  border: 1px solid black;
   margin: 20px;
   align-self: flex-start;
   border-radius: 8px;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  background-color: white;
 `
 
 const StyledLink = styled(Link)`
@@ -49,7 +51,11 @@ const ClassroomsIndex = () => {
   return (
     <>
       <Header>
-        <Link to='/classrooms/new'><h3>+ Add a Classroom</h3></Link>
+        <Link to='/classrooms/new'>
+          <Button>
+            Add a New Class
+          </Button>
+        </Link>
         <Title>Classrooms</Title>
       </Header>
       <ListContainer>

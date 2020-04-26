@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const store = createStore()
 
   const obj = document.createElement('div')
-  obj.setAttribute("style", "display: flex; height: 100%;")
+  obj.setAttribute("style", "display: flex;")
 
   ReactDOM.render(
     <Provider store={store}>

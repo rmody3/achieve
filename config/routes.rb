@@ -25,8 +25,13 @@ Rails.application.routes.draw do
 
   namespace :api do
     resources :classrooms
-    resources :rewards
-    resources :goals
+    resources :rewards do
+      post 'claim', on: :member
+      get 'claimed', on: :collection
+    end
+    resources :goals do
+      put 'approve', on: :member
+    end
     resources :class_participants
     resources :comments
   end

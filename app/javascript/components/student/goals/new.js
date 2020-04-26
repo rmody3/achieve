@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom'
 import httpClient from '@utils/http_client'
 
 import {Header, Title} from '@components/shared/header'
-import {Input, Label, Select} from '@components/shared/input'
+import {Input, Label, Select, Textarea} from '@components/shared/input'
 import Submit from '@components/shared/submit'
 
 const NewGoal = (props) => {
@@ -74,9 +74,8 @@ const NewGoal = (props) => {
         onChange={e => setTitle(e.target.value)}
       />
 
-      <Input
+      <Textarea
         label="Description: "
-        type="textbox"
         id="description"
         placeholder="a detailed summary of our description"
         onChange={e => setDescription(e.target.value)}

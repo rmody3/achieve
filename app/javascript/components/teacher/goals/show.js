@@ -131,7 +131,7 @@ const GoalShow = () => {
       approvedDate: Date.now()
     }
 
-    httpClient.put(`/api/goals/${id}`, body)
+    httpClient.put(`/api/goals/${id}/approve`, body)
     .then(response => {
       setGoal(response.data)
       console.log(response)

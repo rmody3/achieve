@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 
-import {Header, Title} from '@components/shared/header'
-import {Button} from '@components/shared/input'
+import {Header, Title, Subtitle, SubHeader} from '@components/shared/header'
+import Submit from '@components/shared/submit'
+
 
 import httpClient from '@utils/http_client'
 
@@ -31,14 +32,26 @@ const Reward = styled.div`
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   background-color: white;
 `
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: black;
+const ClaimedReward = styled(Reward)`
+  background-color: lightgreen;
 `
 
 const RewardsIndex = () => {
   const [rewards, setRewards] = useState([]);
+  const [claimedRewards, setClaimedRewards] = useState([]);
+
+  const claimReward = (e, rewardId) => {
+    e.preventDefault()
+
+    httpClient.post(`/api/rewards/${rewardId}/claim`)
+    .then(response => {
+      setRewards([])
+      setClaimedRewards([])
+      console.log(response)
+    }).catch(response => {
+      console.log(response)
+    })  
+  }
 
   useEffect(()=> { 
     httpClient.get('/api/rewards')
@@ -50,17 +63,26 @@ const RewardsIndex = () => {
     })  
   }, [rewards.length])
 
+
+  useEffect(()=> { 
+    httpClient.get('/api/rewards/claimed')
+    .then(response => {
+      setClaimedRewards(response.data)
+      console.log(response)
+    }).catch(response => {
+      console.log(response)
+    })  
+  }, [claimedRewards.length])
+
   
   return (
     <>
       <Header>
-        <Link to='/rewards/new'>
-          <Button>
-            Add a New Reward
-          </Button>
-        </Link>
         <Title>Rewards</Title>
       </Header>
+      <SubHeader>
+        <Subtitle>Available Rewards</Subtitle>
+      </SubHeader>
       <ListContainer>
         {
           rewards.map((item)=>{
@@ -69,11 +91,31 @@ const RewardsIndex = () => {
                 <h2>Reward for {item.classroom}</h2>
                 <p>{item.description}</p>
                 <p>AP to Earn Reward: {item.achievement_points}</p>
+                <Submit
+                  label="Claim"
+                  onClick={(e)=> {claimReward(e, item.id)}}
+                />
               </Reward>
             )
           })
         }
       </ListContainer>
+      <SubHeader>
+        <Subtitle>Claimed Rewards</Subtitle>
+      </SubHeader>
+      <ListContainer>
+      {
+        claimedRewards.map((item)=>{
+          return (
+            <ClaimedReward key={item.id} >
+              <h2>Reward for {item.classroom}</h2>
+              <p>{item.description}</p>
+              <p>AP to Earn Reward: {item.achievement_points}</p>
+            </ClaimedReward>
+          )
+        })
+      }
+    </ListContainer>
     </>
   )
 }

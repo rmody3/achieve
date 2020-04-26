@@ -7,7 +7,7 @@ import httpClient from '@utils/http_client'
 import {Header, Title, SubHeader, Subtitle} from '@components/shared/header'
 import {Input} from '@components/shared/input'
 import Submit from '@components/shared/submit'
-import { ApproveNotice } from '@components/shared/goal'
+import { ApproveNotice, Goal } from '@components/shared/goal'
 
 const ListContainer = styled.div`
   display: flex;
@@ -15,21 +15,6 @@ const ListContainer = styled.div`
   flex-wrap: wrap;
   max-width: 100%;
   padding: 0px 20px
-`
-
-const Goal = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  justify-content: space-evenly;
-  width: 100%;
-  height: 200px;
-  border: 1px solid black;
-  margin: 20px;
-  align-self: flex-start;
-  border-radius: 8px;
-  word-wrap: normal;
 `
 
 const CommentsContainer = styled.div`
@@ -119,7 +104,7 @@ const GoalShow = () => {
       </Header>
       <ListContainer>
         <Goal>
-          <ApproveNotice approvedDate={item.approved_date} />
+          <ApproveNotice approvedDate={goal.approved_date} />
           <p>Description: {goal.description}</p>
           <h4>Due Date: {goal.due_date}</h4>
           <h4>Achievement Points: {goal.achievement_points}</h4>
