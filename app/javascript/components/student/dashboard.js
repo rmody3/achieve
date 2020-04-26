@@ -8,6 +8,7 @@ import httpClient from '@utils/http_client'
 import { ApproveNotice, Goal } from '@components/shared/goal'
 import {Header, SubHeader, Title, Subtitle} from '@components/shared/header'
 import {Button} from '@components/shared/input'
+import AccountSummary from '@components/shared/account_summary'
 
 const ListContainer = styled.div`
   display: flex;
@@ -23,34 +24,19 @@ const StyledLink = styled(Link)`
   color: black;
 `
 
-const AccountSummaryContainer = styled.div`
-  display: flex;
-  margin: 0 auto;
-  padding: 0 40px;
-  justify-content: space-between;
-`
-
-const AccountSummaryBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-  padding: 10px;
-  background-color: #FFC447;
-  width: 28%;
-  height: 200px;
-`
-
-const BadgeList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-`
-
-const Strong = styled.strong`
-  padding: 5px 0px;
-`
-
 const StudentDashboard = (props) => {
+  const [studentInfo, setStudentInfo] = useState({})
   const [goals, setGoals] = useState([]) 
+
+  useEffect(()=> { 
+    httpClient.get('/api/students')
+    .then(response => {
+      setStudentInfo(response.data)
+      console.log(response)
+    }).catch(response => {
+      console.log(response)
+    })  
+  }, [studentInfo.size])
 
   useEffect(()=> { 
     httpClient.get('/api/goals')
@@ -67,23 +53,9 @@ const StudentDashboard = (props) => {
       <Header>
         <Title>Your Student Dashboard</Title>
       </Header>
-      <AccountSummaryContainer>
-        <AccountSummaryBox>
-          <h3>CURRENT LEVEL</h3>
-        </AccountSummaryBox>
-        <AccountSummaryBox>
-          <h3>YOUR BADGES</h3>
-          <BadgeList></BadgeList>
-        </AccountSummaryBox>
-        <AccountSummaryBox>
-          <h3>ACHIEVEMENT POINTS EARNED</h3>
-          <h3>ACHIEVEMENTS POINTS LEFT</h3>
-        </AccountSummaryBox>
-      </AccountSummaryContainer>
-      
+      <AccountSummary studentInfo={studentInfo} />      
       <SubHeader>
         <Subtitle>Your Goals</Subtitle>
-
         <Link to='/goals/new'>
           <Button>Add a new Goal</Button>
         </Link>

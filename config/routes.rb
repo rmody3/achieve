@@ -34,5 +34,6 @@ Rails.application.routes.draw do
     end
     resources :class_participants
     resources :comments
+    resources :students
   end
 end

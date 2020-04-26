@@ -4,8 +4,9 @@ import styled from 'styled-components'
 
 import httpClient from '@utils/http_client'
 
-import {Header, Title} from '@components/shared/header'
+import {Header, Title, SubHeader, Subtitle} from '@components/shared/header'
 import { ApproveNotice, Goal } from '@components/shared/goal'
+import AccountSummary from '@components/shared/account_summary'
 
 const ListContainer = styled.div`
   display: flex;
@@ -24,12 +25,14 @@ const ParticipantShow = () => {
   let { id } = useParams()
   const [goals, setGoals] = useState([])
   const [classroom, setClassroom] = useState()
+  const [studentInfo, setStudentInfo] = useState({})
 
   useEffect(()=> { 
     httpClient.get(`/api/class_participants/${id}`)
     .then(response => {
       setGoals(response.data.goals)
       setClassroom(response.data.classroom)
+      setStudentInfo(response.data.student_info)
       console.log(response)
     }).catch(response => {
       console.log(response)
@@ -53,8 +56,8 @@ const ParticipantShow = () => {
       )
     } else {
       return (
-        <h3>
-          "Student does not have any goals for this class yet"
+        <h3 style={{'paddingLeft': '20px'}}>
+          Student does not have any goals for this class yet
         </h3>
       )
     }
@@ -63,8 +66,12 @@ const ParticipantShow = () => {
   return (
     <>
       <Header>
-        <Title>{classroom ? classroom.name : 'Loading'}</Title>
+        <Title>{classroom ? studentInfo.email + ' for ' + classroom.name : 'Loading'}</Title>
       </Header>
+      <AccountSummary studentInfo={studentInfo} />
+      <SubHeader>
+        <Subtitle>Student's Goals</Subtitle>
+      </SubHeader>      
       <ListContainer>
         {showGoals()}
       </ListContainer>

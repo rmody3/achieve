@@ -9,4 +9,8 @@ class Student < ApplicationRecord
   has_many :goals, through: :class_participants
   has_many :rewards, through: :classrooms
   has_many :achieved_rewards, through: :class_participants
+
+  def level
+    (0.089*(points_total**0.694)).floor
+  end
 end

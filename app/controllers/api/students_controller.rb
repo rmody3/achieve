@@ -1,9 +1,17 @@
 class Api::StudentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :authenticate_teacher!, only: [:show]
 
   def index
-    render json: current_user.classrooms.to_json
+    response = {
+      id: current_student.email,
+      email: current_student.email,
+      level: current_student.level,
+      points_total: current_student.points_total,
+      points_remaining: current_student.points_remaining,
+      badges: 'a badge'
+    }
+
+    render json: response.to_json 
   end
 
   def create
@@ -14,7 +22,7 @@ class Api::StudentsController < ApplicationController
   end
 
   def show
-    #TO DO
+    render json
   end
 
   def update

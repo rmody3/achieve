@@ -39,7 +39,15 @@ class Api::ClassParticipantsController < ApplicationController
 
     render json: {
       goals: class_participant&.goals,
-      classroom: Classroom.find(params[:id])
+      classroom: class_participant.classroom,
+      student_info: {
+        id: class_participant.student.email,
+        email: class_participant.student.email,
+        level: class_participant.student.level,
+        points_total: class_participant.student.points_total,
+        points_remaining: class_participant.student.points_remaining,
+        badges: 'a badge'
+      }
     }.to_json
   end
 
