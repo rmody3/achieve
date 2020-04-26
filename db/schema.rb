@@ -12,9 +12,12 @@
 
 ActiveRecord::Schema.define(version: 2020_04_26_062050) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "achieved_rewards", force: :cascade do |t|
-    t.integer "class_participant_id"
-    t.integer "reward_id"
+    t.bigint "class_participant_id"
+    t.bigint "reward_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["class_participant_id", "reward_id"], name: "index_achieved_rewards_on_class_participant_id_and_reward_id", unique: true
@@ -23,7 +26,7 @@ ActiveRecord::Schema.define(version: 2020_04_26_062050) do
   end
 
   create_table "badges", force: :cascade do |t|
-    t.integer "student_id"
+    t.bigint "student_id"
     t.string "kind"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -31,14 +34,14 @@ ActiveRecord::Schema.define(version: 2020_04_26_062050) do
   end
 
   create_table "class_participants", force: :cascade do |t|
-    t.integer "classroom_id"
-    t.integer "student_id"
+    t.bigint "classroom_id"
+    t.bigint "student_id"
     t.index ["classroom_id"], name: "index_class_participants_on_classroom_id"
     t.index ["student_id"], name: "index_class_participants_on_student_id"
   end
 
   create_table "classrooms", force: :cascade do |t|
-    t.integer "teacher_id"
+    t.bigint "teacher_id"
     t.string "name"
     t.string "join_code"
     t.boolean "archived", default: false
@@ -49,8 +52,8 @@ ActiveRecord::Schema.define(version: 2020_04_26_062050) do
 
   create_table "comments", force: :cascade do |t|
     t.string "author_type"
-    t.integer "author_id"
-    t.integer "goal_id"
+    t.bigint "author_id"
+    t.bigint "goal_id"
     t.text "body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -59,7 +62,7 @@ ActiveRecord::Schema.define(version: 2020_04_26_062050) do
   end
 
   create_table "goals", force: :cascade do |t|
-    t.integer "class_participant_id"
+    t.bigint "class_participant_id"
     t.string "title", null: false
     t.text "description", null: false
     t.date "due_date"
@@ -73,7 +76,7 @@ ActiveRecord::Schema.define(version: 2020_04_26_062050) do
   end
 
   create_table "rewards", force: :cascade do |t|
-    t.integer "classroom_id"
+    t.bigint "classroom_id"
     t.text "description", null: false
     t.integer "achievement_points", null: false
     t.datetime "created_at", precision: 6, null: false
