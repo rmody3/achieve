@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 import httpClient from '@utils/http_client'
 
-import { ApproveNotice, Goal } from '@components/shared/goal'
+import { Goal } from '@components/shared/goal'
 import {Header, SubHeader, Title, Subtitle} from '@components/shared/header'
 import {Button} from '@components/shared/input'
 import AccountSummary from '@components/shared/account_summary'
@@ -64,14 +64,14 @@ const StudentDashboard = (props) => {
         {
           goals.map((item)=>{
             return <StyledLink key={item.id} to={`goals/${item.id}`}>
-              <Goal>
-                <ApproveNotice approvedDate={item.approved_date} />
-                <h4>Goal: {item.title}</h4>
-                <p>Description: {item.description}</p>
-                <h4>Class: {item.classroom_name}</h4>
-                <h4>Due Date: {item.due_date}</h4>
-                <h4>Achievement Points: {item.achievement_points}</h4>
-              </Goal>
+              <Goal
+                title={item.title}
+                approved_date={item.approved_date}
+                classroom_name={item.classroom_name}
+                due_date={item.due_date}
+                achievement_points={item.achievement_points}
+                description={item.description}
+              />
             </StyledLink>
           })
         }

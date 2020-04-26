@@ -155,7 +155,7 @@ const GoalShow = () => {
 
   const showApproved = () => {
     if(goal && goal.approved_date != null){
-      return <StyledTitle>Approved!</StyledTitle>
+      return <StyledTitle>Achieved!</StyledTitle>
     } else {
       return (
         <Submit label="Approve" onClick={approveGoal} />
