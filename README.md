@@ -1,24 +1,28 @@
-# README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Achieve: A Goal Setting App
+Public URL: https://polar-ravine-39769.herokuapp.com/
 
-Things you may want to cover:
+## Pre Requisites
+Ruby 2.4+
+Rails 5.2+
+Node.js 10.13.0+
+Yarn 1.x+
 
-* Ruby version
+## To run locally
+run bin/rails s 
+run bin/webpack-dev-server
 
-* System dependencies
+The app defaults to localhost:3000
 
-* Configuration
+## A few existing bugs
+There is are some CSRF issues that will protect by nulling out the session. If you see bugs like this just refresh the page
 
-* Database creation
+## Overall Design
+React Frontend
+Rails backend
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Credit for Assets
+https://www.flaticon.com/authors/freepik
+https://thenounproject.com/search/?q=ambitious&i=2518882
+https://www.flaticon.com/authors/phatplus
+https://www.flaticon.com/authors/becris
